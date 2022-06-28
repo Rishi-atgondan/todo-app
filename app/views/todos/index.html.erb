@@ -29,7 +29,7 @@
                         <% Todo.all.each do |todo| %>
                             <%if todo.completed == false%>
                                 <tr>
-                                    <th><%= todo.id %></th>
+                                    <th></th>
                                     <th><%= todo.todo_text %></th>
                                     <th><%= todo.due_date %></th>
             
@@ -47,7 +47,7 @@
                         <% Todo.all.each do |todo| %>
                             <%if todo.completed == true%>
                                 <tr>
-                                    <th><%= todo.id %></th>
+                                    <th></th>
                                     <th><%= todo.todo_text %></th>
                                     <th><%= todo.due_date %></th>
             
