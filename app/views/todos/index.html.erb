@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="row">
+        <div>
+            <h4>TO-DO</h4>
+        </div>
+        
+        <div>
+            <form action="/create" method="post">
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <input type="text" class="input" name="todo_text" placeholder="Add task" required><br><br>
+                <input type="date" class="input" name="due_date" placeholder="DD-MM-YY" required><br><br><br>
+                <div class="input_btn_div">
+                    <button class="sub_btn" type="submit">ADD TASK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="status_btn">
+            <button onclick="completed()" id="comp">Not Completed</button>
+            <button onclick="notCompleted()" id="incomp">Completed</button>
+        </div>
+
+        <div class="show_tasks">
+            <div class="wrapper" id="not_complete">  
+                <div class="complete">
+                    <table>
+                        <% Todo.all.each do |todo| %>
+                            <%if todo.completed == false%>
+                                <tr>
+                                    <th><%= todo.id %></th>
+                                    <th><%= todo.todo_text %></th>
+                                    <th><%= todo.due_date %></th>
+            
+                                    <th><a href="/complete/<%= todo.id %>"><button class="status_update_button_1">complete</button></a></th>
+                                    <th><a href="/delete/<%= todo.id %>"><button class="status_update_button_2">❌</button></a></th>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                    </table>
+                </div>  
+            </div>
+            <div class="wrapper" id="complete">  
+                <div class="complete">  
+                    <table>
+                        <% Todo.all.each do |todo| %>
+                            <%if todo.completed == true%>
+                                <tr>
+                                    <th><%= todo.id %></th>
+                                    <th><%= todo.todo_text %></th>
+                                    <th><%= todo.due_date %></th>
+            
+                                    <!-- <th><button style="background-color: #F44F4F; cursor: not-allowed;" class="status_update_button_1">complete</button></th> -->
+                                    <th><a href="/delete/<%= todo.id %>"><button class="status_update_button_2">❌</button></a></th>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let current_tab = localStorage.getItem("current_tab");
+    if(current_tab == "completed"){
+        completed();
+    } else {
+        notCompleted();
+           }
+    function completed(){
+        document.getElementById("complete").style.display = "none";
+        document.getElementById("not_complete").style.display = "flex";
+        document.getElementById("comp").style.color = "#F44F4F";
+        document.getElementById("incomp").style.color = "#c0c0c0";
+        localStorage.clear();
+        localStorage.setItem("current_tab","completed");
+        
+    }   
+    function notCompleted(){
+        document.getElementById("complete").style.display = "flex";
+        document.getElementById("not_complete").style.display = "none";
+        document.getElementById("incomp").style.color = "#85D977";
+        document.getElementById("comp").style.color = "#c0c0c0"; 
+        localStorage.clear();
+        localStorage.setItem("current_tab","not-completed");
+      
+    }
+</script>
