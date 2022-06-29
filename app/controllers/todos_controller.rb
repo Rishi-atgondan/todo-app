@@ -19,6 +19,7 @@ class TodosController < ApplicationController
       redirect_to "/"
     end
   end
+   
   def delete
     @todos = Todo.find(params[:id])
     if @todos.destroy      
